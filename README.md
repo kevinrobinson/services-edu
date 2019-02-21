@@ -1,8 +1,10 @@
 # services-edu
 
-For people to hack around with using services in K12 schools.
+For people to hack around with using services in K12 schools (eg, images, videos, texts).
 
-See https://github.com/kevinrobinson/youtube-classifier-experiment for an example app using YouTube search.
+- image search example [code](https://github.com/kevinrobinson/image-search-experiment) [demo](https://image-search-experiment.herokuapp.com)
+- video search example [code](https://github.com/kevinrobinson/youtube-classifier-experiment) [demo](https://youtube-classifier-experiment.herokuapp.com/)
+
 
 ## Getting started using services-edu
 You need an `X-Services-Edu-API-Key` to use this service, and then it will take care of the API keys for other services.
@@ -18,9 +20,6 @@ fetch(url, {headers})
 ```
 
 ## Documentation for services
-- Images search
-- YouTube search
-
 ### Images search
 This searches a limited subset of domains for images.
 
