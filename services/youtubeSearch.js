@@ -13,7 +13,7 @@ const YOUTUBE_CONFIG_JSON = JSON.parse(process.env.YOUTUBE_CONFIG_JSON);
 function youtubeSearch(req, res) {
   const query = req.query.q;
   const key = YOUTUBE_CONFIG_JSON.api_key;
-  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${query}&key=${key}`;
+  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&key=${encodeURIComponent(key)}`;
 
   // caching
   const cacheKey = youtubeCacheKey(url);
@@ -21,7 +21,7 @@ function youtubeSearch(req, res) {
   if (cachedJson) return res.json(cachedJson);
 
   // fetch
-  console.log('fetching youtube search...');
+  console.log('fetching for youtubeSearch...');
   fetch(url)
     .then(response => response.json())
     .then(json => {

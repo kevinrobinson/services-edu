@@ -2,10 +2,15 @@ const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
-const {youtubeSearch} = require('./youtubeSearch');
+const {youtubeSearch} = require('./services/youtubeSearch');
+const {imagesSearch} = require('./services/imagesSearch');
+
+
+/* --- server setup ---------------------------------- */
 
 // create server
 const app = express();
+
 
 // only allow https
 function enforceHTTPS(request, response, next) {
@@ -34,6 +39,7 @@ app.use(rateLimit({
 
 // Allow CORS
 const CORS_ALLOW_ORIGIN = process.env.CORS_ALLOW_ORIGIN;
+console.log('CORS_ALLOW_ORIGIN', CORS_ALLOW_ORIGIN);
 app.use(cors({origin: CORS_ALLOW_ORIGIN}));
 
 
@@ -50,8 +56,10 @@ function checkApiKey(req, res, next) {
 }
 
 
-// youtube search
+/* --- services ---------------------------------- */
 app.get('/youtube/search', checkApiKey, youtubeSearch);
+app.get('/images/search', checkApiKey, imagesSearch)
+/* ----------------------------------------------- */
 
 
 // start server
