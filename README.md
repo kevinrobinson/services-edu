@@ -1,6 +1,6 @@
 # services-edu
 
-For people to hack around with using services in K12 schools (eg, images, videos, texts).
+For people to hack around with using services in K12 schools (eg, images, videos, text messages).
 
 - image search example [code](https://github.com/kevinrobinson/image-search-experiment) [demo](https://image-search-experiment.herokuapp.com)
 - video search example [code](https://github.com/kevinrobinson/youtube-classifier-experiment) [demo](https://youtube-classifier-experiment.herokuapp.com/)

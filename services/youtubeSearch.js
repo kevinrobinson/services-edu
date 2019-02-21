@@ -1,12 +1,13 @@
 const fetch = require('node-fetch');
+const LRU = require('lru-cache');
 
 
-// cache in 60 second windows, no expiration until server bounces
-const youtubeCache = {};
-function youtubeCacheKey(url) {
-  const timeBucket = Math.floor(new Date().getTime() / (60 * 1000));
-  return [url, timeBucket].join(':');
-}
+// in-memory cache for a day
+const youtubeCache = new LRU({
+  length(n, key) { return n.length; },
+  max: 1024 * 1024 * 10, // 10mb
+  maxAge: 1000 * 60 * 60 * 24 // 24hours
+});
 
 // youtube search query
 const YOUTUBE_CONFIG_JSON = JSON.parse(process.env.YOUTUBE_CONFIG_JSON);
@@ -16,8 +17,7 @@ function youtubeSearch(req, res) {
   const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&key=${encodeURIComponent(key)}`;
 
   // caching
-  const cacheKey = youtubeCacheKey(url);
-  const cachedJson = youtubeCache[cacheKey];
+  const cachedJson = youtubeCache.get(url);
   if (cachedJson) return res.json(cachedJson);
 
   // fetch
@@ -26,7 +26,7 @@ function youtubeSearch(req, res) {
     .then(response => response.json())
     .then(json => {
       res.json(json);
-      youtubeCache[cacheKey] = json;
+      youtubeCache.set(cacheKey, json);
     })
     .catch(error => res.status(500).json({error}))
 }
