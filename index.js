@@ -4,9 +4,24 @@ const rateLimit = require('express-rate-limit');
 const path = require('path');
 const {youtubeSearch} = require('./youtubeSearch');
 
-
-// create app with IP-based rate limiter for all endpoints
+// create server
 const app = express();
+
+// only allow https
+function enforceHTTPS(request, response, next) {
+  if (process.env.NODE_ENV === 'development') return next();
+
+  if (request.headers['x-forwarded-proto'] !== 'https') {
+    const httpsUrl = ['https://', request.headers.host, request.url].join('');
+    return response.redirect(httpsUrl);
+  }
+
+  return next();
+}
+app.use(enforceHTTPS);
+
+
+// create IP-based rate limiter for all endpoints
 app.use(rateLimit({
   windowMs: 10*60*1000, // 10 minutes
   max: 100, // limit each IP to n requests per windowMs
@@ -15,6 +30,11 @@ app.use(rateLimit({
     console.log('rateLimit reached!');
   }
 }));
+
+
+// Allow CORS
+const CORS_ALLOW_ORIGIN = process.env.CORS_ALLOW_ORIGIN;
+app.use(cors({origin: CORS_ALLOW_ORIGIN}));
 
 
 // Check API key for allowing access 
@@ -28,10 +48,6 @@ function checkApiKey(req, res, next) {
 
   res.status(405).json({status: 'Invalid x-services-edu-api-key header.'});
 }
-
-// Allow CORS
-const CORS_ALLOW_ORIGIN = process.env.CORS_ALLOW_ORIGIN;
-app.use(cors({origin: CORS_ALLOW_ORIGIN}));
 
 
 // youtube search
