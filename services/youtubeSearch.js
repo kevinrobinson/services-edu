@@ -10,11 +10,12 @@ const youtubeCache = new LRU({
 });
 
 // youtube search query
+// see https://developers.google.com/youtube/v3/docs/search/list
 const YOUTUBE_CONFIG_JSON = JSON.parse(process.env.YOUTUBE_CONFIG_JSON);
 function youtubeSearch(req, res) {
   const query = req.query.q;
   const key = YOUTUBE_CONFIG_JSON.api_key;
-  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&key=${encodeURIComponent(key)}`;
+  const url = `https://www.googleapis.com/youtube/v3/search?safeSearch=strict&part=snippet&q=${encodeURIComponent(query)}&key=${encodeURIComponent(key)}`;
 
   // caching
   const cachedJson = youtubeCache.get(url);
