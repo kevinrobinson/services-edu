@@ -21,7 +21,7 @@ function youtubeSearch(req, res) {
   if (cachedJson) return res.json(cachedJson);
 
   // fetch
-  console.log('fetching...');
+  console.log('fetching youtube search...');
   fetch(url)
     .then(response => response.json())
     .then(json => {

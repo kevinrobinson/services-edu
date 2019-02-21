@@ -12,7 +12,7 @@ app.use(rateLimit({
   max: 100, // limit each IP to n requests per windowMs
   delayMs: 0, // disable delaying - full speed until the max limit is reached
   onLimitReached: (req, res, options) => {
-    console.log('RateLimit reached!');
+    console.log('rateLimit reached!');
   }
 }));
 
@@ -21,8 +21,10 @@ app.use(rateLimit({
 const SERVICES_EDU_CONFIG_JSON = JSON.parse(process.env.SERVICES_EDU_CONFIG_JSON);
 function checkApiKey(req, res, next) {
   const apiKey = req.get('x-services-edu-api-key');
-  console.log('checkApiKey', apiKey, SERVICES_EDU_CONFIG_JSON.api_keys);
-  if (SERVICES_EDU_CONFIG_JSON.api_keys.indexOf(apiKey) !== -1) return next();
+  if (SERVICES_EDU_CONFIG_JSON.api_keys.indexOf(apiKey) !== -1) {
+    console.log(`checkApiKey allowed ${apiKey}`);
+    return next();
+  }
 
   res.status(405).json({status: 'Invalid x-services-edu-api-key header.'});
 }
