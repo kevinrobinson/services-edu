@@ -39,7 +39,6 @@ app.use(rateLimit({
 
 // Allow CORS
 const CORS_ALLOW_ORIGIN = process.env.CORS_ALLOW_ORIGIN;
-console.log('CORS_ALLOW_ORIGIN', CORS_ALLOW_ORIGIN);
 app.use(cors({origin: CORS_ALLOW_ORIGIN}));
 
 
