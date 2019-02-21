@@ -26,7 +26,7 @@ function youtubeSearch(req, res) {
     .then(response => response.json())
     .then(json => {
       res.json(json);
-      youtubeCache.set(cacheKey, json);
+      youtubeCache.set(url, json);
     })
     .catch(error => res.status(500).json({error}))
 }
