@@ -1,6 +1,8 @@
 # services-edu
 
-For hacking around with services in K12 schools.
+For people to hack around with using services in K12 schools.
+
+See https://github.com/kevinrobinson/youtube-classifier-experiment for an example app using YouTube search.
 
 ## Getting started
 You need an `X-Services-Edu-API-Key` to use this service, and then it will take care of the API keys for other services.
