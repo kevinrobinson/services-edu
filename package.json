@@ -1,0 +1,19 @@
+{
+  "name": "services-edu",
+  "version": "0.1.0",
+  "engines": {
+    "node": "10.x"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.15.2",
+    "express-rate-limit": "^3.4.0",
+    "node-fetch": "^2.3.0"
+  },
+  "devDependencies": {},
+  "license": "MIT"
+}
