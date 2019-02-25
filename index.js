@@ -5,7 +5,10 @@ const rateLimit = require('express-rate-limit');
 const path = require('path');
 const {youtubeSearch} = require('./services/youtubeSearch');
 const {imagesSearch} = require('./services/imagesSearch');
-const {sendTextMessage} = require('./services/textMessages');
+const {
+  sendTextMessage,
+  receiveTextMessageWebhook
+} = require('./services/textMessages');
 
 
 /* --- server setup ---------------------------------- */
@@ -59,8 +62,8 @@ function checkApiKey(req, res, next) {
 
 /* --- services ---------------------------------- */
 app.get('/youtube/search', checkApiKey, youtubeSearch);
-app.get('/images/search', checkApiKey, imagesSearch)
-app.post('/texts/send', checkApiKey, sendTextMessage)
+app.get('/images/search', checkApiKey, imagesSearch);
+app.post('/texts/receive_webhook', receiveTextMessageWebhook); // called from twilio; no api key
 /* ----------------------------------------------- */
 
 
