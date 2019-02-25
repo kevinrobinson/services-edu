@@ -1,16 +1,18 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
 const {youtubeSearch} = require('./services/youtubeSearch');
 const {imagesSearch} = require('./services/imagesSearch');
+const {sendTextMessage} = require('./services/textMessages');
 
 
 /* --- server setup ---------------------------------- */
 
 // create server
 const app = express();
-
+app.use(bodyParser.json());
 
 // only allow https
 function enforceHTTPS(request, response, next) {
@@ -58,6 +60,7 @@ function checkApiKey(req, res, next) {
 /* --- services ---------------------------------- */
 app.get('/youtube/search', checkApiKey, youtubeSearch);
 app.get('/images/search', checkApiKey, imagesSearch)
+app.post('/texts/send', checkApiKey, sendTextMessage)
 /* ----------------------------------------------- */
 
 
