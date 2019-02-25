@@ -63,7 +63,10 @@ function checkApiKey(req, res, next) {
 /* --- services ---------------------------------- */
 app.get('/youtube/search', checkApiKey, youtubeSearch);
 app.get('/images/search', checkApiKey, imagesSearch);
-app.post('/texts/receive_webhook', receiveTextMessageWebhook); // called from twilio; no api key
+app.post('/texts/send', checkApiKey, sendTextMessage);
+
+// this is called by twilio, and shouldn't be used by developers
+app.post('/texts/receive_webhook', receiveTextMessageWebhook); 
 /* ----------------------------------------------- */
 
 

@@ -40,7 +40,7 @@ const body = {
   message: 'hello!'
 };
 const headers = {'X-Services-Edu-Api-Key': 'abcdef'};
-fetch(url, {headers, body})
+fetch(url, {headers, body, method: 'POST'})
   .then(response => response.json())
   .then(json => console.log('done!', json))
   .catch(error => console.log('error!', error));
