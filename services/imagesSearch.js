@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 // youtube search query
 const IMAGES_SEARCH_CONFIG_JSON = JSON.parse(process.env.IMAGES_SEARCH_CONFIG_JSON);
-function imagesSearch(req, res) {
+async function imagesSearch(req, res) {
   const {cache} = res.app.locals;
   const query = req.query.q;
   const key = IMAGES_SEARCH_CONFIG_JSON.api_key;
@@ -10,7 +10,7 @@ function imagesSearch(req, res) {
   const url = `https://www.googleapis.com/customsearch/v1?safe=high&searchType=image&cx=${encodeURIComponent(cx)}&key=${encodeURIComponent(key)}&q=${encodeURIComponent(query)}`;
 
   // caching
-  const cachedJson = cache.get(url);
+  const cachedJson = await cache.get(url);
   if (cachedJson) return res.json(cachedJson);
 
   // fetch
