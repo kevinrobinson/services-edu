@@ -298,6 +298,7 @@ To start the app, you'll need to config for the various services, and start in d
 
 ```
 NODE_ENV=development \
+DATABASE_URL=http://localhost:5432/services-edu-dev \
 CORS_ALLOW_ORIGIN='*' \
 SERVICES_EDU_CONFIG_JSON='{"api_keys":["xyz"]}' \
 YOUTUBE_CONFIG_JSON='{"api_key":"xyz"}' \

@@ -3,6 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
+const {createCache} = require('./cache');
 const {youtubeSearch} = require('./services/youtubeSearch');
 const {imagesSearch} = require('./services/imagesSearch');
 const {translateText} = require('./services/translateText');
@@ -42,6 +43,9 @@ app.use(rateLimit({
   }
 }));
 
+
+// for durable caching across all endpoints, and availabilty over freshness
+app.locals.cache = createCache();
 
 // Allow CORS
 const CORS_ALLOW_ORIGIN = process.env.CORS_ALLOW_ORIGIN;
