@@ -21,6 +21,46 @@ fetch(url, {headers})
 ```
 
 ## Documentation for services
+### Text translation
+This uses Google Cloud Translate API.
+
+endpoint:
+`GET /languages/translate`
+
+params:
+```
+text: text to translate
+language: two-letter code of language to translate to
+```
+See https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes for list of two-letter language codes.
+
+example:
+`/languages/translate?language=es&text=What%20is%20your%20name%3F`
+
+full example:
+```
+const url = `https://services-edu.herokuapp.com/languages/translate?language=es&text=${encodeUriComponent('What is your name?')}`;
+const headers = {'X-Services-Edu-Api-Key': 'abcdef'};
+fetch(url, {headers})
+  .then(response => response.json())
+  .then(json => console.log('done!', json))
+  .catch(error => console.log('error!', error));
+```
+example response:
+```
+{
+  "data": {
+    "translations": [
+      {
+        "translatedText": "¿Cuál es su nombre?",
+        "detectedSourceLanguage": "en"
+      }
+    ]
+  }
+}
+```
+
+
 ### Video search
 This searches the YouTube API.
 
@@ -263,5 +303,6 @@ SERVICES_EDU_CONFIG_JSON='{"api_keys":["xyz"]}' \
 YOUTUBE_CONFIG_JSON='{"api_key":"xyz"}' \
 IMAGES_SEARCH_CONFIG_JSON='{"cx":"xyz","api_key":"xyz"}' \
 TWILIO_CONFIG_JSON='{"send_safelist":["+15551234567"],"from_number":"+15551234567","twilio_account_sid":"xyz","twilio_auth_token":"xyz"}' \
+TRANSLATE_TEXT_CONFIG_JSON='{"api_key":"xyz"}' \
 yarn start
 ```

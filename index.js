@@ -5,6 +5,7 @@ const rateLimit = require('express-rate-limit');
 const path = require('path');
 const {youtubeSearch} = require('./services/youtubeSearch');
 const {imagesSearch} = require('./services/imagesSearch');
+const {translateText} = require('./services/translateText');
 const {
   sendTextMessage,
   receiveTextMessageWebhook
@@ -63,6 +64,7 @@ function checkApiKey(req, res, next) {
 /* --- services ---------------------------------- */
 app.get('/youtube/search', checkApiKey, youtubeSearch);
 app.get('/images/search', checkApiKey, imagesSearch);
+app.get('/languages/translate', checkApiKey, translateText);
 app.post('/texts/send', checkApiKey, sendTextMessage);
 
 // this is called by twilio, and shouldn't be used by developers
