@@ -307,3 +307,18 @@ TWILIO_CONFIG_JSON='{"send_safelist":["+15551234567"],"from_number":"+1555123456
 TRANSLATE_TEXT_CONFIG_JSON='{"api_key":"xyz"}' \
 yarn start
 ```
+
+
+## Provision database for durable cache
+
+Make a Postgres database, with tables:
+```
+# CREATE DATABASE "services-edu-dev";
+# \c "services-edu-dev";
+# CREATE TABLE cached (
+  id serial primary key,
+  cache_key text,
+  json jsonb,
+  timestampz timestamptz
+);
+```
